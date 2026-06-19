@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "Custom New Tab",
+  "version": "1.1",
+  "description": "Custom retro new tab for Firefox.",
+  "author": "Gibsy",
+  "icons": {
+    "48": "icon.jpg"
+  },
+  "permissions": ["storage"],
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "custom-newtab@gibsy.dev",
+      "strict_min_version": "142.0",
+      "data_collection_permissions": {
+        "required": ["none"],
+        "optional": []
+      }
+    }
+  }
+}

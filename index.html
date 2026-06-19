@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>newtab</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="icon" type="image/jpeg" href="icon.jpg">
+</head>
+
+<body>
+	<div id="clockWrap">
+		<div id="clock">00:00:00</div>
+		<div id="date"></div>
+		<div id="weather" class="weather" style="display:none;"></div>
+	</div>
+
+	<div class="search-block">
+		<div class="search-container">
+			<input type="text" placeholder="Search.." id="searchBar" autofocus>
+			<img src="logo.png" class="search-icon" alt="">
+		</div>
+		<div class="search-hint">
+			<span><b>!d</b> DuckDuckGo</span>
+			<span><b>!y</b> YouTube</span>
+			<span><b>!w</b> Wikipedia</span>
+		</div>
+	</div>
+
+	<div id="shortcuts">
+		<div class="shortcut add-btn" id="addShortcutBtn">
+			<div class="add-icon">+</div>
+			<p>Add</p>
+		</div>
+	</div>
+
+	<!-- Notes / scratchpad (left side, toggle in settings) -->
+	<div id="notesPanel" class="notes-panel" style="display:none;">
+		<div class="notes-head">📝 Notes</div>
+		<textarea id="notesArea" placeholder="Type anything… autosaved" spellcheck="false"></textarea>
+	</div>
+
+	<div id="addModal" style="display:none;">
+		<div class="modal-box">
+			<h3>New shortcut</h3>
+			<input type="text" id="shortcutName" placeholder="Name (e.g. YouTube)" maxlength="12">
+			<input type="text" id="shortcutUrl" placeholder="URL (e.g. youtube.com)">
+			<div class="icon-section">
+				<p class="icon-label">Custom icon (optional)</p>
+				<div class="icon-preview-row">
+					<img id="addIconPreview" src="" alt="preview" style="display:none;">
+					<div class="icon-inputs">
+						<div class="icon-url-row">
+							<input type="text" id="addIconUrl" placeholder="Paste URL or base64...">
+							<button class="apply-btn" id="applyAddIconBtn">Apply</button>
+						</div>
+						<label class="file-upload-btn">
+							📁 Upload file
+							<input type="file" id="addIconFile" accept="image/*" style="display:none;">
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="modal-buttons">
+				<button id="saveShortcutBtn">Add</button>
+				<button id="closeAddModalBtn">Cancel</button>
+			</div>
+		</div>
+	</div>
+
+	<div id="editModal" style="display:none;">
+		<div class="modal-box">
+			<h3>Edit shortcut</h3>
+			<input type="text" id="editName" placeholder="Name" maxlength="12">
+			<input type="text" id="editUrl" placeholder="URL">
+			<div class="icon-section">
+				<p class="icon-label">Change icon (optional)</p>
+				<div class="icon-preview-row">
+					<img id="editIconPreview" src="" alt="preview" style="display:none;">
+					<div class="icon-inputs">
+						<div class="icon-url-row">
+							<input type="text" id="editIconUrl" placeholder="Paste URL or base64...">
+							<button class="apply-btn" id="applyEditIconBtn">Apply</button>
+						</div>
+						<label class="file-upload-btn">
+							📁 Upload file
+							<input type="file" id="editIconFile" accept="image/*" style="display:none;">
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="modal-buttons">
+				<button id="saveEditBtn">Save</button>
+				<button id="closeEditModalBtn">Cancel</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="settings-container">
+		<div id="settingsPanel" class="settings-panel" style="display:none;">
+			<p class="panel-label">Search engine</p>
+			<div class="panel-row seg" id="engineRow">
+				<button class="panel-btn seg-btn" data-engine="google">Google</button>
+				<button class="panel-btn seg-btn" data-engine="ddg">DDG</button>
+				<button class="panel-btn seg-btn" data-engine="brave">Brave</button>
+			</div>
+
+			<p class="panel-label">Search hints</p>
+			<button class="panel-btn" id="hintsToggleBtn">Hints: On</button>
+
+			<p class="panel-label">Background</p>
+			<input type="text" id="bgInput" placeholder="Link to custom BG">
+			<div class="panel-row">
+				<label class="panel-btn" for="bgFile">📁 Upload</label>
+				<input type="file" id="bgFile" accept="image/*" style="display:none;">
+				<button class="panel-btn" id="clearBgBtn">Reset</button>
+			</div>
+
+			<p class="panel-label">Weather</p>
+			<div class="panel-row">
+				<input type="text" id="weatherCity" placeholder="City (e.g. Amsterdam)">
+				<button class="panel-btn panel-btn-narrow" id="weatherSaveBtn">Set</button>
+			</div>
+
+			<p class="panel-label">Notes</p>
+			<button class="panel-btn" id="notesToggleBtn">📝 Notes: Off</button>
+
+			<p class="panel-label">Sound</p>
+			<button class="panel-btn" id="muteBtn">🔊 Sound: On</button>
+
+			<p class="panel-label">Shortcuts backup &amp; sync</p>
+			<div class="panel-row">
+				<button class="panel-btn" id="exportBtn">Export</button>
+				<label class="panel-btn" for="importFile">Import</label>
+				<input type="file" id="importFile" accept="application/json" style="display:none;">
+			</div>
+			<p class="sync-status" id="syncStatus"></p>
+		</div>
+		<button class="settings-btn" id="settingsBtn" title="Settings" aria-label="Settings">⚙</button>
+	</div>
+
+	<audio id="hoverSound" src="hover.wav" preload="auto"></audio>
+	<audio id="clickSound" src="click.wav" preload="auto"></audio>
+
+	<script src="redirect.js" defer></script>
+</body>
+</html>

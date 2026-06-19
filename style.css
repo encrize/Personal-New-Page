@@ -1,0 +1,733 @@
+:root {
+    --accent: orange;
+    --accent-hover: #ffb733;
+    --bg-base: #333344;
+    --text: #ffffff;
+    --glass: linear-gradient(135deg, rgba(12, 12, 12, 0.1), rgba(255, 255, 255, 0.02));
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+
+    background-color: var(--bg-base);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+
+    background-color: var(--bg-base);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 38px;
+    padding: 6vh 0 24px;
+    overflow: hidden;
+}
+
+a:link, a:visited, a:hover, a:active {
+    color: var(--text);
+}
+
+#clockWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+}
+
+#clock {
+    font-family: "Tahoma", sans-serif;
+    font-size: 80px;
+    color: var(--text);
+    text-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.6),
+        0 3px 45px rgba(0, 0, 0, 0.5),
+        0 0 10px rgba(0, 0, 0, 0.8);
+    font-weight: bold;
+    letter-spacing: -2px;
+    padding: 0 30px;
+    border-radius: 20px;
+}
+
+#date {
+    font-family: "Tahoma", sans-serif;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.75);
+    text-transform: capitalize;
+    letter-spacing: 0.04em;
+    margin-top: 4px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.search-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: min(700px, 90vw);
+}
+
+.search-container {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+#searchBar {
+    font-family: "Tahoma", sans-serif;
+    font-size: 14px;
+    color: #000;
+    background: linear-gradient(to bottom, rgba(240, 240, 240, 0.1) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(226, 226, 226, 0.1) 100%);
+    border: 2px solid #555;
+    border-radius: 20px;
+    box-shadow: 1px 6px 10px black, inset 1px 1px 2px #000;
+    width: 100%;
+    height: 55px;
+    padding: 2px 20px 2px 42px;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+}
+
+#searchBar:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.search-hint {
+    display: flex;
+    gap: 18px;
+    font-family: "Tahoma", sans-serif;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.search-hint b {
+    color: var(--accent);
+}
+
+#shortcuts {
+    margin-top: 34px;
+    width: 80vw;
+    max-width: 1000px;
+    border-radius: 20px;
+    padding: 25px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 25px;
+    justify-items: center;
+    color: var(--text);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: var(--glass);
+    box-sizing: border-box;
+}
+
+.shortcut {
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    text-decoration: none;
+    color: var(--text);
+}
+
+.shortcut:hover {
+    transform: scale(1.15);
+}
+
+.shortcut:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 12px;
+}
+
+.shortcut:hover img {
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.7));
+}
+
+.shortcut img {
+    height: 64px;
+    width: 64px;
+    object-fit: contain;
+    transition: filter 0.2s ease;
+    -webkit-user-drag: none;
+}
+
+.shortcut.dragging {
+    opacity: 0.4;
+}
+
+.shortcut.drag-over {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 12px var(--accent));
+}
+
+.shortcut p {
+    margin-top: 5px;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 80px;
+}
+
+.del-btn,
+.edit-btn {
+    position: absolute;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 10;
+    padding: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.shortcut:hover .del-btn,
+.shortcut:hover .edit-btn,
+.shortcut:focus-within .del-btn,
+.shortcut:focus-within .edit-btn {
+    display: flex;
+}
+
+.del-btn {
+    top: -8px;
+    right: -8px;
+    background: rgba(200, 0, 0, 0.9);
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.del-btn:hover {
+    background: rgba(255, 30, 30, 1);
+}
+
+.edit-btn {
+    top: -8px;
+    left: -8px;
+    background: rgba(30, 120, 255, 0.9);
+    color: white;
+    font-size: 13px;
+}
+
+.edit-btn:hover {
+    background: rgba(60, 150, 255, 1);
+}
+
+.add-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.6);
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.add-btn:hover {
+    transform: scale(1.15);
+    color: #fff;
+}
+
+.add-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    border: 2px dashed rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 1;
+    transition: 0.2s;
+}
+
+.add-btn:hover .add-icon {
+    border-color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+#addModal,
+#editModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    #addModal, #editModal { background: rgba(0, 0, 0, 0.8); }
+    #shortcuts { background: rgba(20, 20, 28, 0.85); }
+    #searchBar { background: rgba(230, 230, 230, 0.92); color: #000; }
+    .modal-box { background: rgba(24, 24, 30, 0.97); }
+    .settings-panel { background: rgba(24, 24, 30, 0.97); }
+}
+
+.modal-box {
+    background: linear-gradient(135deg, rgba(12, 12, 12, 0.55), rgba(255, 255, 255, 0.04));
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 20px;
+    padding: 28px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 340px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.modal-box h3 {
+    margin: 0 0 4px 0;
+    color: #fff;
+    font-family: "Tahoma", sans-serif;
+    font-size: 17px;
+    font-weight: bold;
+    padding-left: 12px;
+    border-left: 3px solid var(--accent);
+    letter-spacing: 0.02em;
+}
+
+.modal-box input[type="text"] {
+    font-family: "Tahoma", sans-serif;
+    font-size: 14px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.modal-box input[type="text"]::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.modal-box input[type="text"]:focus {
+    border-color: var(--accent);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(255, 165, 0, 0.18);
+}
+
+.icon-section {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 12px 14px;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.icon-label {
+    margin: 0;
+    font-family: "Tahoma", sans-serif;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.icon-preview-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+#addIconPreview,
+#editIconPreview {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    object-fit: contain;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.icon-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.icon-url-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.icon-url-row input[type="text"] {
+    font-size: 12px !important;
+    padding: 7px 10px !important;
+    flex: 1;
+}
+
+.apply-btn {
+    flex-shrink: 0;
+    padding: 7px 14px;
+    border-radius: 6px;
+    border: none;
+    background: var(--accent);
+    color: #000;
+    font-family: "Tahoma", sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(255, 165, 0, 0.3);
+}
+
+.apply-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+}
+
+.apply-btn:active {
+    transform: translateY(0);
+}
+
+.file-upload-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.6);
+    font-family: "Tahoma", sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+    text-align: center;
+}
+
+.file-upload-btn:hover {
+    border-color: rgba(255, 165, 0, 0.6);
+    color: #fff;
+    background: rgba(255, 165, 0, 0.07);
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 11px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: "Tahoma", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.15s, transform 0.1s, box-shadow 0.15s;
+}
+
+.modal-buttons button:first-child {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 3px 12px rgba(255, 165, 0, 0.35);
+}
+
+.modal-buttons button:first-child:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 16px rgba(255, 165, 0, 0.45);
+}
+
+.modal-buttons button:first-child:active {
+    transform: translateY(0);
+}
+
+.modal-buttons button:last-child {
+    background: rgba(255, 255, 255, 0.07);
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.modal-buttons button:last-child:hover {
+    background: rgba(255, 255, 255, 0.13);
+    color: #fff;
+}
+
+.settings-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.settings-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 220px;
+    padding: 16px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(12, 12, 12, 0.55), rgba(255, 255, 255, 0.04));
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.panel-label {
+    margin: 4px 0 0;
+    font-family: "Tahoma", sans-serif;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.settings-panel #bgInput {
+    display: block;
+    margin: 0;
+    padding: 9px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-family: "Tahoma", sans-serif;
+    font-size: 13px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.settings-panel #bgInput::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.settings-panel #bgInput:focus {
+    border-color: var(--accent);
+}
+
+.panel-row {
+    display: flex;
+    gap: 8px;
+}
+
+.panel-btn {
+    flex: 1;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.85);
+    font-family: "Tahoma", sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.panel-btn:hover {
+    border-color: rgba(255, 165, 0, 0.6);
+    background: rgba(255, 165, 0, 0.08);
+    color: #fff;
+}
+
+.settings-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border: 2px solid #fff;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s ease;
+}
+
+.settings-btn:hover {
+    transform: rotate(45deg);
+}
+
+/* ============ v1.2 additions ============ */
+.settings-panel {
+    max-height: 82vh;
+    overflow-y: auto;
+}
+
+/* generic text inputs inside the settings panel (weather city, etc.) */
+.settings-panel input[type="text"] {
+    display: block;
+    margin: 0;
+    padding: 9px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-family: "Tahoma", sans-serif;
+    font-size: 13px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.settings-panel input[type="text"]::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.settings-panel input[type="text"]:focus {
+    border-color: var(--accent);
+}
+
+.panel-row .panel-btn-narrow {
+    flex: 0 0 auto;
+    min-width: 54px;
+}
+
+/* segmented engine switcher */
+.seg .seg-btn.active {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    box-shadow: 0 2px 10px rgba(255, 165, 0, 0.35);
+}
+
+.sync-status {
+    margin: 2px 0 0;
+    font-family: "Tahoma", sans-serif;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.45);
+    letter-spacing: 0.04em;
+}
+
+/* weather under the clock */
+.weather {
+    font-family: "Tahoma", sans-serif;
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.82);
+    margin-top: 6px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+    user-select: none;
+}
+
+/* notes / scratchpad on the left */
+.notes-panel {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 230px;
+    padding: 14px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(12, 12, 12, 0.55), rgba(255, 255, 255, 0.04));
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.notes-head {
+    font-family: "Tahoma", sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.5);
+    padding-left: 8px;
+    border-left: 3px solid var(--accent);
+}
+
+#notesArea {
+    width: 100%;
+    height: 230px;
+    resize: vertical;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-family: "Tahoma", sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    outline: none;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+#notesArea::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+#notesArea:focus {
+    border-color: var(--accent);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(255, 165, 0, 0.18);
+}
+
+@media (max-width: 900px) {
+    .notes-panel { display: none !important; }
+}
